@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.5.0">
+<eagle version="8.4.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
+<setting keepoldvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="0.025" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
@@ -46,6 +47,8 @@
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="yes"/>
 <layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="88" name="SimResults" color="9" fill="1" visible="no" active="no"/>
+<layer number="89" name="SimProbes" color="9" fill="1" visible="no" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="no" active="no"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="no" active="no"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="no" active="no"/>
@@ -2564,6 +2567,15 @@ RN4020</text>
 </package>
 </packages>
 </library>
+<library name="Temperature sensor">
+<packages>
+<package name="TO92-LP">
+<pad name="2" x="0" y="1.27" drill="0.85" diameter="1.016" shape="long" rot="R90"/>
+<pad name="3" x="1.27" y="1.27" drill="0.85" diameter="1.016" shape="long" rot="R90"/>
+<pad name="1" x="-1.27" y="1.27" drill="0.85" diameter="1.016" shape="long" rot="R90"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2649,10 +2661,9 @@ design rules under a new name.</description>
 <param name="slThermalsForVias" value="0"/>
 <param name="dpMaxLengthDifference" value="10mm"/>
 <param name="dpGapFactor" value="2.5"/>
-<param name="checkGrid" value="0"/>
-<param name="checkAngle" value="0"/>
 <param name="checkFont" value="1"/>
 <param name="checkRestrict" value="1"/>
+<param name="checkStop" value="0"/>
 <param name="useDiameter" value="13"/>
 <param name="maxErrors" value="50"/>
 </designrules>
@@ -2785,8 +2796,9 @@ design rules under a new name.</description>
 </element>
 <element name="R2" library="resistor" package="M1206" value="47K" x="2.54" y="-3.81"/>
 <element name="R3" library="resistor" package="M1206" value="22K" x="2.54" y="-10.16"/>
-<element name="T1" library="Vishay_tsal4400_bpw85c" package="LED3MM" value="BPW85C" x="2.54" y="-15.875"/>
+<element name="T1" library="Vishay_tsal4400_bpw85c" package="LED3MM" value="BPW85C" x="15.24" y="27.305"/>
 <element name="C4" library="rcl" package="C1206" value="1nF" x="2.54" y="-21.59"/>
+<element name="U2" library="Temperature sensor" package="TO92-LP" value="LMT84-TO-92LP" x="3.175" y="-33.02"/>
 </elements>
 <signals>
 <signal name="N$10">
@@ -2884,15 +2896,12 @@ design rules under a new name.</description>
 </signal>
 <signal name="VDD">
 <contactref element="C1" pad="1"/>
-<contactref element="U1" pad="1"/>
 <contactref element="JP1" pad="10"/>
-<wire x1="3.81" y1="11.43" x2="12.7" y2="11.43" width="0.8128" layer="16"/>
 <contactref element="JP1" pad="9"/>
 <wire x1="3.81" y1="11.43" x2="3.81" y2="13.97" width="0.8128" layer="16"/>
 <wire x1="3.81" y1="11.43" x2="7.49" y2="11.43" width="0.254" layer="1"/>
 <contactref element="C2" pad="1"/>
 <contactref element="C3" pad="1"/>
-<wire x1="12.7" y1="11.43" x2="12.7" y2="12.7" width="0.4064" layer="1"/>
 <wire x1="12.7" y1="12.7" x2="13.716" y2="13.716" width="0.4064" layer="1"/>
 <wire x1="13.716" y1="13.716" x2="15.11" y2="13.716" width="0.4064" layer="1"/>
 <contactref element="U$1" pad="P23"/>
@@ -2900,7 +2909,6 @@ design rules under a new name.</description>
 <wire x1="17.526" y1="1.524" x2="16.51" y2="2.54" width="0.8128" layer="16"/>
 <wire x1="16.51" y1="2.54" x2="16.51" y2="8.636" width="0.8128" layer="16"/>
 <wire x1="16.51" y1="8.636" x2="13.716" y2="11.43" width="0.8128" layer="16"/>
-<wire x1="13.716" y1="11.43" x2="12.7" y2="11.43" width="0.8128" layer="16"/>
 <wire x1="17.526" y1="1.524" x2="22.86" y2="1.524" width="0.8128" layer="16"/>
 <wire x1="22.86" y1="1.524" x2="24.13" y2="2.794" width="0.8128" layer="16"/>
 <wire x1="24.13" y1="2.794" x2="24.13" y2="3.81" width="0.8128" layer="16"/>
@@ -2915,8 +2923,8 @@ design rules under a new name.</description>
 <wire x1="23.876" y1="32.512" x2="18.672" y2="32.512" width="0.6096" layer="16"/>
 <wire x1="23.876" y1="32.512" x2="21.458" y2="32.512" width="0.3048" layer="1"/>
 <wire x1="21.458" y1="32.512" x2="21.41" y2="32.56" width="0.4064" layer="1"/>
-<contactref element="T1" pad="K"/>
-<wire x1="3.81" y1="-15.875" x2="17.526" y2="1.524" width="0" layer="19" extent="16-16"/>
+<wire x1="13.716" y1="11.43" x2="12.7" y2="12.7" width="0" layer="19" extent="1-16"/>
+<wire x1="7.49" y1="11.43" x2="12.7" y2="12.7" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RA2">
 <contactref element="JP2" pad="10"/>
@@ -2952,6 +2960,8 @@ design rules under a new name.</description>
 <wire x1="22.86" y1="11.43" x2="22.86" y2="13.97" width="0.254" layer="1"/>
 <wire x1="22.86" y1="13.97" x2="25.4" y2="16.51" width="0.254" layer="1"/>
 <wire x1="25.4" y1="16.51" x2="26.67" y2="16.51" width="0.254" layer="1"/>
+<contactref element="U2" pad="3"/>
+<wire x1="12.7" y1="6.35" x2="4.445" y2="-31.75" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RA3">
 <contactref element="U1" pad="4"/>
@@ -2975,8 +2985,10 @@ design rules under a new name.</description>
 <wire x1="4.826" y1="19.304" x2="4.064" y2="19.304" width="0.254" layer="1"/>
 <wire x1="4.064" y1="19.304" x2="3.81" y2="19.05" width="0.254" layer="1"/>
 <contactref element="R2" pad="2"/>
-<wire x1="17.526" y1="7.62" x2="4.826" y2="19.304" width="0" layer="19" extent="1-1"/>
-<wire x1="3.94" y1="-3.81" x2="12.7" y2="3.81" width="0" layer="19" extent="1-1"/>
+<contactref element="U2" pad="1"/>
+<wire x1="3.94" y1="-3.81" x2="1.905" y2="-31.75" width="0" layer="19" extent="1-1"/>
+<wire x1="12.7" y1="3.81" x2="3.94" y2="-3.81" width="0" layer="19" extent="1-1"/>
+<wire x1="4.826" y1="19.304" x2="17.526" y2="7.62" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RA5">
 <contactref element="JP1" pad="11"/>
@@ -2984,10 +2996,8 @@ design rules under a new name.</description>
 <contactref element="R1" pad="2"/>
 <wire x1="8.89" y1="10.16" x2="3.81" y2="8.89" width="0.254" layer="1"/>
 <wire x1="12.7" y1="8.89" x2="8.89" y2="10.16" width="0.254" layer="1"/>
-<contactref element="T1" pad="A"/>
 <contactref element="C4" pad="1"/>
-<wire x1="1.27" y1="-15.875" x2="1.14" y2="-21.59" width="0" layer="19" extent="1-1"/>
-<wire x1="8.89" y1="6.48" x2="1.27" y2="-15.875" width="0" layer="19" extent="1-1"/>
+<wire x1="8.89" y1="6.48" x2="1.14" y2="-21.59" width="0" layer="19" extent="1-1"/>
 <wire x1="8.89" y1="10.16" x2="8.89" y2="6.48" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
@@ -3088,6 +3098,7 @@ design rules under a new name.</description>
 <via x="22.225" y="22.225" extent="1-16" drill="0.7" diameter="1.27"/>
 <contactref element="R3" pad="1"/>
 <contactref element="C4" pad="2"/>
+<contactref element="U2" pad="2"/>
 <wire x1="15.872" y1="32.512" x2="21.41" y2="33.76" width="0" layer="19" extent="1-16"/>
 <wire x1="10.41" y1="33.76" x2="15.872" y2="32.512" width="0" layer="19" extent="1-16"/>
 <wire x1="22.225" y1="22.225" x2="21.41" y2="33.76" width="0" layer="19" extent="1-1"/>
@@ -3100,6 +3111,7 @@ design rules under a new name.</description>
 <wire x1="3.81" y1="6.35" x2="8.89" y2="3.68" width="0" layer="19" extent="1-1"/>
 <wire x1="1.14" y1="-10.16" x2="8.89" y2="3.68" width="0" layer="19" extent="1-1"/>
 <wire x1="3.94" y1="-21.59" x2="1.14" y2="-10.16" width="0" layer="19" extent="1-1"/>
+<wire x1="3.175" y1="-31.75" x2="3.94" y2="-21.59" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="BATT_MON">
 <contactref element="U1" pad="5"/>
@@ -3107,6 +3119,9 @@ design rules under a new name.</description>
 <contactref element="R3" pad="2"/>
 <wire x1="1.14" y1="-3.81" x2="20.32" y2="3.81" width="0" layer="19" extent="1-1"/>
 <wire x1="3.94" y1="-10.16" x2="1.14" y2="-3.81" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$13">
+<contactref element="T1" pad="A"/>
 </signal>
 </signals>
 </board>
